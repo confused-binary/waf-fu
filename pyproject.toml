@@ -1,0 +1,55 @@
+[project]
+name = "waf-fu"
+version = "0.1.1"
+description = "AWS WAF v2 log replayer with an interactive TUI"
+readme = "README.md"
+license = { text = "BSD-3-Clause" }
+requires-python = ">=3.12"
+dependencies = ["boto3", "selenium"]
+authors = [
+    { name = "@confused-binary" },
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Information Technology",
+    "License :: OSI Approved :: BSD License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Security",
+]
+
+[project.urls]
+Repository = "https://gitrdun.trustedsec.net/cloud/aws/waf-fu"
+
+[project.scripts]
+waf-fu = "waf_fu.cli:main"
+wfu = "waf_fu.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+src = ["src"]
+extend-exclude = [".planning"]  # docs/plans, not code; ruff format's markdown code-fence formatting is not an intended check here
+
+[tool.ruff.lint]
+ignore = [
+    "BLE001",  # broad exception handling is pre-existing behavior, not touched this phase
+    "S110",  # same as above, legacy try/except/pass pattern
+    "PLW1510",  # would require check=True on subprocess.run, changes error behavior
+]
+
+[tool.mypy]
+python_version = "3.12"
+ignore_missing_imports = true
+files = ["src/waf_fu"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

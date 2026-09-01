@@ -1,0 +1,42 @@
+# waf-fu filter rules
+#
+# Load with: waf-fu --filters filters.example.yaml ...
+#
+# Rules are applied in order, top to bottom.
+#   - mode: include  -- keep only entries matching the pattern
+#   - mode: exclude  -- remove entries matching the pattern
+#   - enabled: false  -- skip this rule without deleting it
+#
+# Patterns:
+#   - Plain text is a case-insensitive substring match
+#   - Prefix with ~ for regex (flags: IGNORECASE | MULTILINE)
+
+filters:
+  # Drop static assets (images, stylesheets, fonts, scripts)
+  - pattern: "~\\.(css|js|map|png|jpg|jpeg|gif|ico|svg|webp|woff2?|ttf|eot)([?#]|$)"
+    mode: exclude
+
+  # Drop known bot / crawler traffic
+  - pattern: "~(bot|crawl|spider|slurp|Googlebot|Bingbot)"
+    mode: exclude
+
+  # Keep only requests that hit the API
+  # - pattern: "/api/"
+  #   mode: include
+
+  # Keep only write methods (POST, PUT, PATCH, DELETE)
+  # - pattern: "~(POST|PUT|PATCH|DELETE)"
+  #   mode: include
+
+  # Exclude health-check / keep-alive noise
+  - pattern: "~/(health|ping|ready|alive|status)$"
+    mode: exclude
+
+  # Exclude requests from internal monitoring IP ranges
+  # - pattern: "~^10\\."
+  #   mode: exclude
+  #   enabled: false
+
+  # Keep only requests with authorization headers
+  # - pattern: "~Authorization:"
+  #   mode: include
