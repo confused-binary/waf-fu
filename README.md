@@ -175,6 +175,3 @@ Required for: `--log-location waf`, `--inventory`, auto-enrichment
 Minimum viable: only CloudWatch Logs permissions are required. S3 and
 WAFv2 permissions are optional and enable additional data sources. The
 tool falls back gracefully when permissions are missing.
-
-## Demo
-[![WAF-FU demo](demo)](demo.webm)
