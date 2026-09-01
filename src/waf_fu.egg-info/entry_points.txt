@@ -1,0 +1,3 @@
+[console_scripts]
+waf-fu = waf_fu.cli:main
+wfu = waf_fu.cli:main
